@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "680a320f607072dc2c4ab9f8"
+  },
+  "name": "Admin One",
+  "email": "admin_1@example.com",
+  "password": "$2b$10$82F.dToXBxCjcqoPUPOXCeMuccAxlMLl1Bufg/jtrGnuJ1Q60O/8C",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a33449744478ab6c5bdf3"
+  },
+  "name": "Saurabh Shukla",
+  "email": "saurabh_s@example.com",
+  "password": "$2b$10$6eEeNKnl7oOc8JRhv61vHehz9nMXTXqN/jmXH6qjULUvIl5OTWdFe",
+  "role": "admin",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a33559744478ab6c5bdf6"
+  },
+  "name": "Saurabh Tiwari",
+  "email": "saurabh_t@example.com",
+  "password": "$2b$10$yJnnXXcfI.9366hMCNEbL.l3LhOzG1U2ZffJoddgyQkGSUpz38cke",
+  "role": "user",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a5e1a8bdb80b1744f2578"
+  },
+  "name": "Saurabh Panday",
+  "email": "saurabh_p@example.com",
+  "password": "$2b$10$cIYYdlu7cOUzEkcT.JOWce7aDPWkF2cDj7e7YY/PGdMsE9u.PAUAW",
+  "role": "user",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a5eaf8bdb80b1744f257f"
+  },
+  "name": "Nupur Seth",
+  "email": "nupur_s@example.com",
+  "password": "$2b$10$J4pqS8/GwR4Tnoo8aeU3zOkD6OQloUC5lUAJOryoEFPO2ZelpobgK",
+  "role": "admin",
+  "__v": 0
+}]

@@ -1,0 +1,229 @@
+Let's build a **React JS frontend** with Hooks that connects to your **Node.js Task Management API**. We’ll handle:
+
+- User authentication
+- Role-based rendering (`admin` vs `user`)
+- CRUD for assets (only for admin)
+- View-only asset list for users
+
+---
+
+## 🧱 Project Setup
+
+### 1. **Create React App**
+```bash
+npx create-react-app task-manager-client
+cd task-manager-client
+npm install axios react-router-dom
+```
+
+---
+
+## 📁 Folder Structure
+
+```
+task-manager-client/
+├── src/
+│   ├── api/
+│   │   └── api.js
+│   ├── components/
+│   │   ├── AssetList.js
+│   │   ├── AssetForm.js
+│   │   └── Navbar.js
+│   ├── pages/
+│   │   ├── Login.js
+│   │   └── Dashboard.js
+│   ├── App.js
+│   ├── index.js
+```
+
+---
+
+## 🔐 API Handler (`api/api.js`)
+
+```js
+import axios from 'axios';
+
+const API = axios.create({ baseURL: 'http://localhost:5000/api' });
+
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem('token');
+  if (token) req.headers.Authorization = `Bearer ${token}`;
+  return req;
+});
+
+export default API;
+```
+
+---
+
+## 👤 Login Page (`pages/Login.js`)
+
+```js
+import { useState } from 'react';
+import API from '../api/api';
+import { useNavigate } from 'react-router-dom';
+
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const res = await API.post('/login', { email, password });
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.user.role);
+      navigate('/dashboard');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Login failed');
+    }
+  };
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
+}
+```
+
+---
+
+## 📃 Asset List Component (`components/AssetList.js`)
+
+```js
+import { useEffect, useState } from 'react';
+import API from '../api/api';
+
+export default function AssetList() {
+  const [assets, setAssets] = useState([]);
+  const role = localStorage.getItem('role');
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      const res = await API.get('/assets');
+      setAssets(res.data);
+    };
+    fetchAssets();
+  }, []);
+
+  return (
+    <div>
+      <h3>Assets</h3>
+      <ul>
+        {assets.map(asset => (
+          <li key={asset._id}>
+            <strong>{asset.name}</strong>
+            {role === 'admin' && <span> - {asset.secretKey}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+---
+
+## ➕ Asset Form Component (`components/AssetForm.js`)
+
+```js
+import { useState } from 'react';
+import API from '../api/api';
+
+export default function AssetForm({ onAssetCreated }) {
+  const [name, setName] = useState('');
+  const [secretKey, setSecretKey] = useState('');
+
+  const createAsset = async () => {
+    try {
+      await API.post('/assets', { name, secretKey });
+      setName('');
+      setSecretKey('');
+      onAssetCreated(); // Refresh the list
+    } catch (err) {
+      alert('Error creating asset');
+    }
+  };
+
+  return (
+    <div>
+      <h3>Add Asset</h3>
+      <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+      <input placeholder="Secret Key" value={secretKey} onChange={e => setSecretKey(e.target.value)} />
+      <button onClick={createAsset}>Add</button>
+    </div>
+  );
+}
+```
+
+---
+
+## 📊 Dashboard Page (`pages/Dashboard.js`)
+
+```js
+import AssetList from '../components/AssetList';
+import AssetForm from '../components/AssetForm';
+
+export default function Dashboard() {
+  const role = localStorage.getItem('role');
+
+  const refreshAssets = () => {
+    window.location.reload();
+  };
+
+  return (
+    <div>
+      <h2>Dashboard ({role})</h2>
+      {role === 'admin' && <AssetForm onAssetCreated={refreshAssets} />}
+      <AssetList />
+    </div>
+  );
+}
+```
+
+---
+
+## 🧭 Routing (`App.js`)
+
+```js
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+---
+
+## ✅ Final Touches
+
+- Add **logout button** to clear storage and redirect.
+- Style using Bootstrap, Tailwind, or CSS modules.
+- Secure `/dashboard` route with a private route check.
+
+---
+
+## Want Next?
+
+I can help you:
+- Implement **register page**
+- Add **edit/delete asset** (admin only)
+- Use **React Context** for auth
+- Add **toast notifications**
+
+Let me know what you'd like to add next!

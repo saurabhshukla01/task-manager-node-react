@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "680a5737604e351f6a7c2e04"
+  },
+  "name": "New Asset 1st",
+  "secretKey": "secretkey123",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a57e0604e351f6a7c2e06"
+  },
+  "name": "New Asset 2nd",
+  "secretKey": "secretkey456",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a57f4604e351f6a7c2e08"
+  },
+  "name": "New Asset 3rd",
+  "secretKey": "secretkey789",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a5a468bdb80b1744f256c"
+  },
+  "name": "New Asset 4th",
+  "secretKey": "secretkey345",
+  "owner": {
+    "$oid": "680a320f607072dc2c4ab9f8"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680a61928bdb80b1744f25a7"
+  },
+  "name": "No Asset ",
+  "secretKey": "Nosecretkey889",
+  "owner": {
+    "$oid": "680a5eaf8bdb80b1744f257f"
+  },
+  "__v": 0
+}]
